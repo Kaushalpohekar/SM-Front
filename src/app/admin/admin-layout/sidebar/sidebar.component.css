@@ -1,0 +1,152 @@
+.sidenav {
+    background: #804FB7;
+    transition: all .5s ease;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    width: 4rem;
+    height: 100%;
+    margin-top: 0px;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-x: hidden;
+}
+
+.sidenav::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+}
+
+.sidenav {
+    scrollbar-width: none;
+}
+
+.sidenav {
+    -ms-overflow-style: none;
+}
+
+.sidenav-collapsed {
+    width: 12rem;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    padding: 1.2rem 0rem 1.2rem 0.5rem;
+    width: 100%;
+    position: sticky;
+    top: 0;
+    background: #804FB7;
+    z-index: 10;
+}
+
+mat-toolbar {
+    background: #804FB7;
+}
+
+.logo-text, .logo-text-2 {
+    margin-left: 0.75rem;
+    font-size: 18px;
+    font-weight: 650;
+}
+
+.logo-text {
+    color: #fcf7ff;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.sidenav-nav {
+    flex-grow: 1;
+    list-style: none;
+    padding: 0.638rem;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sidenav-nav-item {
+    width: 100%;
+    margin-bottom: 0.625rem;
+}
+
+.sidenav-nav-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 2.5rem;
+    width: calc(100% + 28px);
+    color: #fcf7ff;
+    text-decoration: none;
+    border-radius: 20px;
+    transition: all .3s ease;
+}
+
+.active ::before {
+    content: '';
+    border: -20px;
+    background-color: red;
+}
+
+
+.sidenav-link-icon {
+    font-size: 20px;
+    width: 2rem;
+    min-width: 2rem;
+    padding-top: 2px;
+    margin: 0.42rem;
+    text-align: center;
+}
+
+.sidenav-link-text {
+    margin-left: 0.5rem;
+    margin-right: calc(0.5rem + 28px);
+    white-space: wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 0.8rem;
+}
+
+.sidenav-nav-item:hover .sidenav-nav-link .sidenav-link-icon, .sidenav-nav-item:hover .sidenav-nav-link {
+    font-weight: 650;
+}
+
+.active {
+    background-color: #fcf7ff;
+}
+
+.active .sidenav-link-icon,
+.active .sidenav-link-text {
+    color:#000;
+}
+
+p{
+    text-align: center;
+}
+
+.line{
+    font-size: 10px;
+    margin-bottom: -1rem;
+}
+
+.number{
+    font-size: 15px;
+    margin-bottom: 0rem;
+    margin-left: 15px;
+    margin-right: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.rotated {
+    transform: rotate(-90deg);
+}
+
+.side-width{
+    min-width: 120px;
+}
+

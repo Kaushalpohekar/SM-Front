@@ -1,0 +1,76 @@
+.table-container {
+    margin: 20px;
+    overflow-x: auto;
+  }
+  
+  mat-form-field {
+    margin-bottom: 16px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #333;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  th, td {
+    padding: 16px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+    text-align: left;
+    color: #333;
+    font-size: 16px;
+  }
+  
+  mat-header-row, mat-row {
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .mat-elevation-z8 {
+    box-shadow: none !important;
+    border: 1px solid #ccc;
+  }
+  
+  mat-paginator {
+    margin-top: 10px;
+  }
+
+  tr:hover {
+    background-color: #f9f9f9;
+  }
+  
+  .search-box {
+    width: 100%;
+    margin-bottom: 16px;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding-left: 4px;
+    box-shadow: none !important;
+  }
+  
+  .search-box .mat-form-field-flex {
+    padding: 8px 12px;
+  }
+  
+  .search-box input.mat-input-element {
+    font-size: 14px;
+    padding: 8px 0;
+  }
+
+.card{
+    width: 100%;
+    padding: 30px;
+    border-radius: 15px;
+}

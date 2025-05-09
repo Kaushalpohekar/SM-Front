@@ -1,55 +1,112 @@
-<div class="table-container card">
-    <!-- <mat-form-field appearance="fill" style="width: 100%;">
-      <mat-label>Filter</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Filter data" />
-    </mat-form-field> -->
-  
-    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-  
-      <ng-container matColumnDef="ID">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-        <td mat-cell *matCellDef="let row">{{ row.ID }}</td>
-      </ng-container>
-  
-      <ng-container matColumnDef="MessageUTC">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Message Time</th>
-        <td mat-cell *matCellDef="let row">{{ row.MessageUTC }}</td>
-      </ng-container>
-  
-      <ng-container matColumnDef="MobileID">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Mobile ID</th>
-        <td mat-cell *matCellDef="let row">{{ row.MobileID }}</td>
-      </ng-container>
-  
-      <ng-container matColumnDef="lastResetReason">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Reset Reason</th>
-        <td mat-cell *matCellDef="let row">{{ row.lastResetReason }}</td>
-      </ng-container>
-  
-      <ng-container matColumnDef="product">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Product</th>
-        <td mat-cell *matCellDef="let row">{{ row.product }}</td>
-      </ng-container>
-  
-      <ng-container matColumnDef="virtualCarrier">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Carrier</th>
-        <td mat-cell *matCellDef="let row">{{ row.virtualCarrier }}</td>
-      </ng-container>
-  
-      <ng-container matColumnDef="beam">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Beam</th>
-        <td mat-cell *matCellDef="let row">{{ row.beam }}</td>
-      </ng-container>
-  
-      <ng-container matColumnDef="RegionName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Region</th>
-        <td mat-cell *matCellDef="let row">{{ row.RegionName }}</td>
-      </ng-container>
-  
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-  
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+<div class="container-fluid dashboard fade-slide">
+  <div class="row mb-2 d-flex align-items-center justify-content-between">
+    <div class="col-lg-9 col-sm-12">
+      <div class="title">Mobile Oriented - Messages History</div> 
+    </div>
+    <div class="col-lg-3 col-sm-12 pt-2 mb-2">
+      <div class="chat-input-box d-flex align-items-center justify-content-center">
+        <input type="text" (keyup)="applyFilter($event)" class="form-control chat-input-field" placeholder="Search Messages..." />
+        <mat-icon class="send-btn">search</mat-icon>
+      </div>
+    </div>
   </div>
-  
+
+  <div class="row">
+    <div class="col-12 mb-2" [@fadeInOut] *ngIf="!isMobileView">
+      <div class="table-card">
+        <div class="table-scroll-vertical">
+          <table mat-table [dataSource]="dataSource" matSort>
+            <ng-container matColumnDef="ID">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Message ID</th>
+              <td mat-cell *matCellDef="let row">
+              <div class="messageId">
+                {{ row.ID }}
+              </div>
+            </td>
+            </ng-container>
+
+            <ng-container matColumnDef="timestamp">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Timestamp</th>
+              <td mat-cell *matCellDef="let row">
+                <div class="timestamp">
+                  Message UTC - {{ row.MessageUTC | date: 'medium' }}
+                </div>
+                <div class="timestamp">
+                  Receive UTC - {{ row.ReceiveUTC | date: 'medium' }}
+                </div>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="deviceInfo">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Device Info</th>
+              <td mat-cell *matCellDef="let row">
+                <div class="device-info">
+                  <div class="mobile-id">Terminal - {{ row.MobileID }}</div>
+                  <div class="region">Region Name - {{ row.RegionName }}</div>
+                </div>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Raw Payload</th>
+              <td mat-cell *matCellDef="let row">
+                <div class="rawPayload">
+                  {{ asciiToString(row.RawPayload) || 'No Payload' }}
+                </div>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="networkInfo">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>OTA MEssage Size</th>
+              <td mat-cell *matCellDef="let row">
+                <div class="otaMessageSize">
+                  {{ row.OTAMessageSize }} bytes
+                </div>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="toggleRow(row)"></tr>
+          </table>
+        </div>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons class="custom-paginator"></mat-paginator>
+      </div>
+    </div>
+    <div class="col-12 mb-2" *ngIf="isMobileView" [@fadeInOut]>
+      <mat-accordion multi>
+        <mat-expansion-panel *ngFor="let row of dataSource.filteredData" class="mb-1">
+          <mat-expansion-panel-header>
+            <mat-panel-title>{{ row.MobileID || row.ID }}</mat-panel-title>
+            <mat-panel-description>{{ row.MessageUTC | date: 'short' }}</mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <div class="accordion-content">
+            <p><strong>Region:</strong> {{ row.RegionName }}</p>
+            <p *ngIf="row.product"><strong>Product:</strong> {{ row.product }}</p>
+            <p *ngIf="row.lastResetReason"><strong>Status:</strong>
+              <mat-chip [color]="getResetReasonColor(row.lastResetReason)" selected>
+                {{ row.lastResetReason }}
+              </mat-chip>
+            </p>
+            <p *ngIf="row.virtualCarrier && row.beam">
+              <strong>Carrier:</strong> {{ row.virtualCarrier }},
+              <strong>Beam:</strong> {{ row.beam }}
+            </p>
+
+            <div *ngIf="row.Payload?.Fields?.length">
+              <strong>Payload:</strong>
+              <ul>
+                <li *ngFor="let f of row.Payload.Fields">{{ f.Name }}: {{ f.Value }}</li>
+              </ul>
+            </div>
+
+            <div *ngIf="row.RawPayload">
+              <strong>Raw Payload:</strong>
+              <code>{{ bytesToHex(row.RawPayload) }}</code>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
+</div>

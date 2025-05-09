@@ -1,7 +1,12 @@
 @import "~bootstrap/dist/css/bootstrap.min.css";
 
-html, body { height: 100%; }
-body { margin: 0; font-family: "Nunito", sans-serif; background-color: #fcf7ff;}
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: "Nunito", sans-serif;
+  background-color: #fcf7ff;
+}
 
 .swal2-confirm {
   background-color: #4CAF50;
@@ -15,53 +20,34 @@ body { margin: 0; font-family: "Nunito", sans-serif; background-color: #fcf7ff;}
   border: none;
 }
 
-
 *::-webkit-scrollbar {
-    width: 0px;
-    height: 1px;
+  width: 6px;
+  height: 6px;
 }
 
 *::-webkit-scrollbar-thumb {
-    background-color: #888;
-    border-radius: 4px;
+  background-color: #aaa;
+  border-radius: 4px;
 }
 
 *::-webkit-scrollbar-thumb:hover {
-    background-color: #555;
+  background-color: #777;
 }
 
-/* Change the border color */
 .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__leading,
 .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__notch,
 .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing {
   border-color: var(--border-color) !important;
 }
 
-
-/* Change the border focused color */
-.mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused
-  .mdc-notched-outline__leading,
-.mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused
-  .mdc-notched-outline__notch,
-.mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused
-  .mdc-notched-outline__trailing {
-  border-color:  #c7112e !important;
+.mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__leading,
+.mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__notch,
+.mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__trailing {
+  border-color: #c7112e !important;
 }
 
-/* Change the border hover color */
-.mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover
-  .mdc-notched-outline
-  .mdc-notched-outline__leading,
-.mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover
-  .mdc-notched-outline
-  .mdc-notched-outline__notch,
-.mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover
-  .mdc-notched-outline
-  .mdc-notched-outline__trailing {
-  border-color:  #c7112e !important;
-}
-
-.custom-dialog-container {
-  border-radius: 15px; 
-  overflow: hidden; 
+.mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover .mdc-notched-outline__leading,
+.mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover .mdc-notched-outline__notch,
+.mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover .mdc-notched-outline__trailing {
+  border-color: #c7112e !important;
 }

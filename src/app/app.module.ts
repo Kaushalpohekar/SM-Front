@@ -7,11 +7,10 @@ import { LoginPageComponent } from './login/pages/login-page/login-page.componen
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { OverlayModule } from '@angular/cdk/overlay';
-import { MatMenuModule } from '@angular/material/menu';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { MaterialModule } from './material/material.module';
+import { DataInterceptor } from './service/data.interceptor';
 
 @NgModule({
   declarations: [
@@ -24,13 +23,13 @@ import { MatMenuModule } from '@angular/material/menu';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     CommonModule,
-    MatFormFieldModule, // Add MatFormFieldModule here
-    MatInputModule, // Add MatInputModule here
-    MatIconModule,
-    MatMenuModule,
-    OverlayModule
+    OverlayModule,
+    HttpClientModule,
+    MaterialModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: DataInterceptor, multi: true }, // Register the interceptor
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

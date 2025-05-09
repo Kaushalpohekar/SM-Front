@@ -9,9 +9,9 @@ import { ServiceService } from '../../service/service.service';
 import { formatDate } from '@angular/common';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css'],
+  selector: 'app-forward',
+  templateUrl: './forward.component.html',
+  styleUrls: ['./forward.component.css'],
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),
@@ -29,8 +29,8 @@ import { formatDate } from '@angular/common';
     ])
   ]
 })
-export class DashboardComponent implements OnInit, OnDestroy {
-  displayedColumns: string[] = ['ID', 'timestamp', 'deviceInfo', 'status', 'networkInfo'];
+export class ForwardComponent implements OnInit, OnDestroy {
+  displayedColumns: string[] = ['ID', 'timestamp', 'deviceInfo', 'status', 'errorInfo'];
   dataSource = new MatTableDataSource<any>([]);
   expandedRow: any | null = null;
   isMobileView = false;
@@ -42,21 +42,20 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   constructor(private service: ServiceService) {
     const now = new Date();
-  const jan1 = new Date(now.getFullYear(), 0, 1); // Jan = 0
-
-  this.dateRange = {
-    start: jan1,
-    end: now
-  };
+    const jan1 = new Date(now.getFullYear(), 0, 1);
+    this.dateRange = {
+      start: jan1,
+      end: now
+    };
   }
 
   ngOnInit() {
     const startUtc = formatDate(this.dateRange.start, 'yyyy-MM-dd HH:mm:ss', 'en-US');
-  const endUtc = formatDate(this.dateRange.end, 'yyyy-MM-dd HH:mm:ss', 'en-US');
+    const endUtc = formatDate(this.dateRange.end, 'yyyy-MM-dd HH:mm:ss', 'en-US');
 
-    this.service.getMessages(startUtc, endUtc).subscribe({
+    this.service.getForwardMessages(startUtc, endUtc).subscribe({
       next: (res) => {
-        this.dataSource.data = res.Messages || [];
+        this.dataSource.data = res || [];
         console.log('Fetched messages:', this.dataSource.data);
       },
       error: (err) => {
@@ -75,13 +74,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.dataSource.sortingDataAccessor = (item, property) => {
       switch (property) {
         case 'timestamp':
-          return item.MessageUTC;
+          return item.CreateUTC;
         case 'deviceInfo':
-          return item.MobileID;
+          return item.DestinationID;
         case 'status':
-          return item.RawPayload || '';
-        case 'networkInfo':
-          return item.OTAMessageSize || '';
+          return this.asciiToString(item.RawPayload || []);
+        case 'errorInfo':
+          return item.ErrorDescription;
         default:
           return item[property];
       }
@@ -101,6 +100,28 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.expandedRow = this.expandedRow === row ? null : row;
   }
 
+  setupResponsiveListener() {
+    this.resizeSubscription = fromEvent(window, 'resize')
+      .pipe(
+        debounceTime(200),
+        map(() => window.innerWidth <= 991),
+        startWith(window.innerWidth <= 991)
+      )
+      .subscribe(isMobile => (this.isMobileView = isMobile));
+  }
+
+  asciiToString(payload: number[]): string {
+    if (!Array.isArray(payload)) return '--';
+    return payload
+      .filter((code) => code >= 32 && code <= 126)
+      .map((code) => String.fromCharCode(code))
+      .join('');
+  }
+
+  bytesToHex(bytes: number[]): string {
+    return bytes.map(b => b.toString(16).padStart(2, '0')).join(' ');
+  }
+
   getResetReasonColor(reason: string): string {
     const colorMap: { [key: string]: string } = {
       'PowerOn': 'primary',
@@ -111,27 +132,4 @@ export class DashboardComponent implements OnInit, OnDestroy {
     };
     return colorMap[reason] || colorMap['default'];
   }
-
-  bytesToHex(bytes: number[]): string {
-    return bytes.map(b => b.toString(16).padStart(2, '0')).join(' ');
-  }
-
-  setupResponsiveListener() {
-    this.resizeSubscription = fromEvent(window, 'resize')
-      .pipe(
-        debounceTime(200),
-        map(() => window.innerWidth <= 991),
-        startWith(window.innerWidth <= 991)
-      )
-      .subscribe(isMobile => (this.isMobileView = isMobile));
-  }
-  
-  asciiToString(payload: number[]): string {
-    if (!Array.isArray(payload)) return '--';
-    return payload
-      .filter((code) => code >= 32 && code <= 126) // printable ASCII
-      .map((code) => String.fromCharCode(code))
-      .join('');
-  }
-  
 }

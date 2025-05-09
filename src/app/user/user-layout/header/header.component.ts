@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-
 import { navbarData } from '../sidebar/nav-data';
-import { AuthService } from 'src/app/login/service/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -20,7 +18,7 @@ export class HeaderComponent {
     'You have 3 new messages'
   ];
 
-  constructor(private router: Router, private authService: AuthService) {
+  constructor(private router: Router, ) {
     // Update page title based on route
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
@@ -53,7 +51,7 @@ export class HeaderComponent {
     }
   }
 
-  logout() { 
-    this.authService.logout();
-  }
+  // logout() { 
+  //   this.auhservice.logout();
+  // }
 }

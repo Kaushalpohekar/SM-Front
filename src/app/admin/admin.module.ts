@@ -9,6 +9,7 @@ import { HeaderComponent } from './admin-layout/header/header.component';
 import { MaterialModule } from '../material/material.module';
 import { MatMenuModule } from '@angular/material/menu';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { ForwardComponent } from './pages/forward/forward.component';
 
 
 @NgModule({
@@ -16,8 +17,9 @@ import { OverlayModule } from '@angular/cdk/overlay';
     BodyComponent,
     DashLayoutComponent,
     DashboardComponent,
-   SidebarComponent,
-    HeaderComponent
+    SidebarComponent,
+    HeaderComponent,
+    ForwardComponent
   ],
   imports: [
     CommonModule,

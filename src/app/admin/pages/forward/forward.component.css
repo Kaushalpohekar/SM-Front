@@ -1,0 +1,210 @@
+.chat-input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .chat-input-box {
+    display: flex;
+    align-items: center;
+    border-radius: 24px;
+    background: #fff;
+    padding: 4px 8px;
+    border: 1px solid #ccc;
+  }
+  
+  .chat-input-field {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    padding: 8px 12px;
+    background: transparent;
+    border-radius: 24px;
+  }
+  
+  .send-btn {
+    color: #4caf50;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  /* Match date-range with chat input style */
+  ::ng-deep .date-range-field {
+    width: 100%;
+  }
+  
+  ::ng-deep mat-form-field.date-range-field.mat-form-field {
+    border-radius: 24px;
+    background: #fff;
+    padding: 0 12px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    box-shadow: none;
+    border: none;
+  }
+  
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+    display: none;
+  }
+  
+  ::ng-deep .mat-form-field-wrapper {
+    padding: 0;
+  }
+  
+  ::ng-deep .mat-form-field-infix {
+    padding: 0;
+    font-size: 14px;
+  }
+  
+  ::ng-deep .mat-date-range-input-inner {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+  
+  
+  .chat-input-box {
+    display: flex;
+    align-items: center;
+    border-radius: 0 0 8px 8px;
+  }
+  
+  .chat-input-field {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    padding: 8px 12px;
+    background: #fff;
+    border-radius: 24px;
+    margin-right: 8px;
+  }
+  
+  .send-btn {
+    background: transparent;
+    border: none;
+    color: #4caf50;
+    font-size: 20px;
+  }
+  
+  .dashboard {
+    height: calc(100vh - 90px);
+    padding: 16px;
+  }
+  
+  .dashboard .title {
+    font-size: 1.2rem;
+    font-weight: 550;
+    color: #737374;
+  }
+  
+  .table-card {
+    background: white;
+    border-radius: 12px;
+    /* Increase for a smoother effect */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    /* Critical for rounded corners */
+  }
+  
+  .table-scroll-vertical {
+    max-height: calc(100vh - 220px);
+    overflow-y: auto;
+    overflow-x: auto;
+    width: 100%;
+  }
+  
+  table {
+    width: 100%;
+    min-width: 1000px;
+  }
+  
+  table .mat-header-cell {
+    font-weight: 600;
+    color: #2d3436;
+    font-size: 14px;
+  }
+  
+  table .mat-row:hover,
+  table .mat-row.expanded-row {
+    background-color: #f8f9fa;
+  }
+  
+  table .mat-cell,
+  table .mat-header-cell {
+    padding: 12px 20px;
+  }
+  
+  .timestamp {
+    display: flex;
+    align-items: center;
+    color: #636e72;
+    font-size: 0.7rem;
+    font-weight: 550;
+  }
+  
+  .messageId{
+    font-size: 0.8rem;
+    font-weight: 550;
+    color: #2d3436;
+  }
+  
+  .device-info .mobile-id {
+    font-size: 0.8rem;
+    font-weight: 550;
+    color: #2d3436;
+  }
+  
+  .device-info .region {
+    font-size: 0.7rem;
+    color: #636e72;
+    font-weight: 550;
+  }
+  
+  .rawPayload {
+    font-size: 0.8rem;
+    font-weight: 550;
+  }
+  
+  .network-info .carrier-beam {
+    display: flex;
+    gap: 12px;
+  }
+  
+  .network-info .carrier,
+  .network-info .beam {
+    padding: 4px 8px;
+    background-color: #e8f4fd;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+  
+  .network-info .product {
+    margin-top: 4px;
+    color: #636e72;
+    font-size: 12px;
+  }
+  
+  .custom-paginator {
+    border-top: 1px solid #e0e0e0;
+    background-color: #f8f9fa;
+  }
+  
+  .fade-slide {
+    animation: fadeInSlide 0.3s ease-in-out;
+  }
+  
+  @keyframes fadeInSlide {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+  
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }

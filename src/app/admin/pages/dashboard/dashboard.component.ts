@@ -42,17 +42,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   constructor(private service: ServiceService) {
     const now = new Date();
-  const jan1 = new Date(now.getFullYear(), 0, 1); // Jan = 0
+    const jan1 = new Date(now.getFullYear(), 0, 1); // Jan = 0
 
-  this.dateRange = {
-    start: jan1,
-    end: now
-  };
+    this.dateRange = {
+      start: jan1,
+      end: now
+    };
   }
 
   ngOnInit() {
     const startUtc = formatDate(this.dateRange.start, 'yyyy-MM-dd HH:mm:ss', 'en-US');
-  const endUtc = formatDate(this.dateRange.end, 'yyyy-MM-dd HH:mm:ss', 'en-US');
+    const endUtc = formatDate(this.dateRange.end, 'yyyy-MM-dd HH:mm:ss', 'en-US');
 
     this.service.getMessages(startUtc, endUtc).subscribe({
       next: (res) => {
@@ -125,7 +125,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       )
       .subscribe(isMobile => (this.isMobileView = isMobile));
   }
-  
+
   asciiToString(payload: number[]): string {
     if (!Array.isArray(payload)) return '--';
     return payload
@@ -133,5 +133,5 @@ export class DashboardComponent implements OnInit, OnDestroy {
       .map((code) => String.fromCharCode(code))
       .join('');
   }
-  
+
 }

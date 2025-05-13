@@ -188,3 +188,27 @@
     font-weight: 550;
     font-style: italic;
 }
+
+.message-scroll-container {
+    max-height: calc(100vh - 230px); /* adjust based on your header + input height */
+    overflow-y: auto;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+.date-divider {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .date-label {
+    background-color: #dff0d8;
+    color: #4caf50;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    box-shadow: 0 0 5px rgba(0,0,0,0.05);
+  }
+  

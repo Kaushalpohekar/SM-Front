@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { BleComponent } from './pages/ble/ble.component';
 import { MtComponent } from './pages/mt/mt.component';
+import { BleChatComponent } from './component/ble-chat/ble-chat.component';
 
 
 const routes: Routes = [
@@ -18,7 +19,12 @@ const routes: Routes = [
     path: 'ble',
     component: BleComponent
   },
+  {
+  path: 'ble-chat',
+  component: BleChatComponent
+},
   {path:'**', redirectTo:'dashboard'}
+
 ];
 
 @NgModule({

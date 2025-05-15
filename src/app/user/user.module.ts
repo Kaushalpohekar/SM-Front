@@ -10,6 +10,7 @@ import { MaterialModule } from '../material/material.module';
 import { FormsModule } from '@angular/forms';
 import { BleComponent } from './pages/ble/ble.component';
 import { MtComponent } from './pages/mt/mt.component';
+import { BleChatComponent } from './component/ble-chat/ble-chat.component';
 
 
 
@@ -21,7 +22,8 @@ import { MtComponent } from './pages/mt/mt.component';
     SidebarComponent,
     DashboardComponent,
     BleComponent,
-    MtComponent
+    MtComponent,
+    BleChatComponent
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,77 @@
+.custom-switch {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  gap: 0.6rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+/* Hide the default checkbox */
+.custom-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+/* The slider track */
+.slider {
+  position: relative;
+  width: 50px;
+  height: 26px;
+  background-color: #ccc;
+  border-radius: 13px;
+  transition: background-color 0.3s;
+}
+
+/* The slider knob */
+.slider::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  width: 22px;
+  height: 22px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+
+/* When checked, change background and move knob */
+.custom-switch input:checked + .slider {
+  background-color: #4caf50;
+}
+
+.custom-switch input:checked + .slider::before {
+  transform: translateX(24px);
+}
+
+
+.device-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+  user-select: none;
+}
+
+.device-card:hover {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+  transform: translateY(-3px);
+  border-color: #4caf50;
+  background-color: #f9fff9;
+}
+
+.device-name {
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.device-id {
+  font-size: 0.85rem;
+  color: #666;
+}

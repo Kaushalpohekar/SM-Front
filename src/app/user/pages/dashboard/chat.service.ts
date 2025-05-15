@@ -382,7 +382,7 @@ export class ChatService {
         }
     }
 
-    private updateChat(updatedChat: Chat): void {
+    public updateChat(updatedChat: Chat): void {
         const index = this.chats.findIndex(c => c.id === updatedChat.id);
         if (index !== -1) {
             this.chats[index] = updatedChat;

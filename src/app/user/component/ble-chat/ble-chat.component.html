@@ -1,0 +1,112 @@
+<div class="container-fluid">
+    <div class="row">
+        <!-- Chat List (Single Device) -->
+        <div class="col-lg-3 col-md-6 col-sm-12 mb-2 chat-container" [class.d-none]="isMobileView && !showChatList">
+            <mat-list class="chat-list">
+                <mat-list-item *ngIf="chat" class="chat-item mb-1" [class.selected]="true" (click)="selectDeviceChat()">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12 d-flex pt-2">
+                                <img mat-list-avatar src="../../../../assets/user.png" class="img-fluid" alt="Device Avatar" />
+                                <div mat-line>
+                                    <h6 class="mb-0">{{ chat.name }}</h6>
+                                    
+                                </div>
+                            </div>
+                            <div class="col-12 d-flex mb-1">
+                                <div mat-line>
+                                    <small class="text-truncate me-2">{{ chat.lastMessage }}</small>
+                                    <small class="text-muted">{{ chat.timestamp | date: 'shortTime' }}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-list-item>
+            </mat-list>
+        </div>
+
+        <!-- Chat Window -->
+        <div class="col-lg-9 col-md-6 col-sm-12 mb-2">
+            <div class="container-fluid chat-window-container" *ngIf="chat || !isMobileView">
+                <ng-container *ngIf="chat; else welcomeBlock">
+                    <div class="row">
+                        <div class="col-12 pt-2">
+                            <div class="chat-header d-flex align-items-center">
+                                <button *ngIf="isMobileView" mat-icon-button (click)="backToChatList()" class="me-2">
+                                    <mat-icon>arrow_back</mat-icon>
+                                </button>
+                                <img mat-list-avatar src="../../../../assets/user.png" class="avatar" alt="Device Avatar" />
+                                <div class="ms-2">
+                                    <h6 class="mb-0 user-name">{{ chat.name }}</h6>
+                                    <small class="text-muted user-status">{{ deviceId }} | {{ chat.online ? 'Connected' : 'Disconnected' }}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row flex-grow-1 overflow-auto">
+                        <div class="col-12 pt-2 mb-1">
+                            <div class="message-scroll-container" id="messageContainer">
+                                <div *ngFor="let group of groupedMessages">
+                                    <div class="date-divider text-center my-3">
+                                        <span class="date-label">{{ formatDateLabel(group.date) }}</span>
+                                    </div>
+
+                                    <div *ngFor="let message of group.messages" class="d-flex flex-column mb-2"
+                                        [ngClass]="{ 'align-items-end': message.sender === 'me', 'align-items-start': message.sender !== 'me' }"
+                                        (click)="message.sender === 'me' && toggleMessageDetails(message)">
+
+                                        <mat-card class="message-content" [ngClass]="{
+                                            'sent-message': message.sender === 'me',
+                                            'received-message': message.sender !== 'me'
+                                        }">
+                                            <mat-card-content>
+                                                <p class="mb-1 message-text">{{ message.text }}</p>
+                                                <div class="message-meta d-flex justify-content-end align-items-center gap-1">
+                                                    <span class="message-time">{{ message.timestamp | date: 'HH:mm' }}</span>
+                                                    <ng-container *ngIf="message.sender === 'me'">
+                                                        <mat-icon class="status-icon" [ngClass]="getMessageIconColor(message.status)">
+                                                            {{ getMessageIcon(message.status) }}
+                                                        </mat-icon>
+                                                    </ng-container>
+                                                </div>
+                                            </mat-card-content>
+                                        </mat-card>
+
+                                        <!-- Status Label -->
+                                        <div *ngIf="message === expandedMessage" class="status-label mt-1"
+                                            [ngClass]="getMessageIconColor(message.status)">
+                                            <span class="label-text">{{ message.status }}</span>
+                                            <mat-icon class="label-icon">{{ getMessageIcon(message.status) }}</mat-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 mb-1">
+                            <div class="chat-input-box d-flex align-items-center justify-content-center">
+                                <input type="text" [(ngModel)]="newMessage" (keyup.enter)="sendMessage()"
+                                    class="form-control chat-input-field" placeholder="Type a message..." maxlength="18"/>
+                                <button class="btn send-btn" (click)="sendMessage()" [disabled]="!newMessage.trim()">
+                                    <mat-icon>send</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <ng-template #welcomeBlock>
+                    <div class="row h-100 justify-content-center align-items-center text-center">
+                        <div class="col-12">
+                            <div class="welcome">Welcome</div>
+                            <div class="message">Select a device to start messaging.</div>
+                        </div>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { navbarData } from '../sidebar/nav-data';
+import { AuthService } from 'src/app/login/service/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -18,7 +19,7 @@ export class HeaderComponent {
     'You have 3 new messages'
   ];
 
-  constructor(private router: Router, ) {
+  constructor(private router: Router, private authservice: AuthService) {
     // Update page title based on route
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
@@ -40,18 +41,14 @@ export class HeaderComponent {
   updateTitleBasedOnUrl(url: string) {
     if (url.includes('dashboard')) {
       this.pageTitle = 'Dashboard';
-    } else if (url.includes('analytics')) {
-      this.pageTitle = 'Analytics';
-    } else if (url.includes('user')) {
-      this.pageTitle = 'User Management';
-    } else if (url.includes('schedule')) {
-      this.pageTitle = 'Schedule Management';
-    } else if (url.includes('profile')){
-      this.pageTitle = 'Profile';
+    } else if (url.includes('ble')) {
+      this.pageTitle = 'Device Oriented';
+    } else if (url.includes('mt')) {
+      this.pageTitle = 'Mobile Terminated';
     }
   }
 
-  // logout() { 
-  //   this.auhservice.logout();
-  // }
+  logout() { 
+    this.authservice.logout();
+  }
 }

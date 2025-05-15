@@ -1,158 +1,41 @@
-<div class="container-fluid ">
-    <div class="row">
-        <div class="col-lg-3 col-md-6 col-sm-12 mb-2 chat-container" [class.d-none]="isMobileView && !showChatList">
-            <mat-list class="chat-list">
-                <mat-list-item class="chat-item mb-2 d-flex justify-content-center">
-                    <button mat-raised-button class="w-100 text-start" (click)="addNewChat()" aria-label="Add new chat"
-                        style="color: green;">
-                        <mat-icon class="me-2">add</mat-icon> Configure New Chat
-                    </button>
-                </mat-list-item>
-                <ng-container *ngIf="!newChatMode; else newChatForm">
-                    <mat-list-item *ngFor="let chat of chatList" class="chat-item mb-1"
-                        [class.selected]="selectedChat?.id === chat.id" (click)="selectChat(chat)">
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-12 d-flex pt-2">
-                                    <img mat-list-avatar src="assets/user.png" class="img-fluid" alt="Avatar" />
-                                    <div mat-line>
-                                        <h6 class="mb-0">{{ chat.name }}</h6>
-                                        <small class="text-muted">{{ chat.timestamp | date: 'shortTime' }}</small>
-                                    </div>
-                                </div>
-                                <div class="col-12 d-flex mb-1">
-                                    <div mat-line>
-                                        <small class="text-truncate me-2">{{ chat.lastMessage }}</small>
-                                        <span *ngIf="chat.unread" matBadge="{{ chat.unread }}" matBadgeColor="primary"
-                                            class="custom-badge"></span>
-                                        <small *ngIf="chat.isTyping" class="text-primary">typing...</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </mat-list-item>
+<div class="container-fluid dash">
+  <div class="card-container feature-card">
 
-                </ng-container>
-                <ng-template #newChatForm>
-                    <div class="p-3">
-                        <h5 class="mb-3 text-primary">Configure New Chat</h5>
-                        <form (ngSubmit)="confirmNewChat()">
-                            <div class="mb-3">
-                                <mat-form-field appearance="fill" class="w-100">
-                                    <mat-label>Chat Name</mat-label>
-                                    <input matInput [(ngModel)]="newChatName" name="chatName" required />
-                                </mat-form-field>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <button mat-stroked-button color="warn" (click)="cancelNewChat()"
-                                    type="button">Cancel</button>
-                                <button mat-raised-button color="primary" type="submit"
-                                    [disabled]="!newChatName.trim()">Save Chat</button>
-                            </div>
-                        </form>
-                    </div>
-                </ng-template>
-            </mat-list>
-        </div>
-        <div class="col-lg-9 col-md-6 col-sm-12 mb-2">
-            <div class="container-fluid chat-window-container" *ngIf="selectedChat || !isMobileView">
-                <ng-container *ngIf="selectedChat; else welcomeBlock">
-                    <div class="row">
-                        <div class="col-12 pt-2">
-                            <div class="chat-header d-flex align-items-center">
-                                <button *ngIf="isMobileView" mat-icon-button (click)="backToChatList()" class="me-2">
-                                    <mat-icon>arrow_back</mat-icon>
-                                </button>
-                                <img mat-list-avatar src='assets/user.png' class="avatar" alt="Avatar" />
-                                <div class="ms-2">
-                                    <h6 class="mb-0 user-name">{{ selectedChat.name }}</h6>
-                                    <small class="text-muted user-status">{{ selectedChat.online ? 'Online' : 'Offline'
-                                        }}</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row flex-grow-1 overflow-auto">
-                        <div class="col-12 pt-2 mb-1">
-                            <div class="message-scroll-container" id="messageContainer">
-                                <!-- <div *ngFor="let message of selectedChat?.messages" class="d-flex mb-2" 
-                                    [ngClass]="{'justify-content-end': message.sender === 'me'}">
-
-                                    <mat-card class="message-content" [ngClass]="{
-                                'sent-message': message.sender === 'me',
-                                'received-message': message.sender !== 'me'
-                              }">
-
-                                        <mat-card-content>
-                                            <p class="mb-1 message-text">{{ message.text }}</p>
-                                            <div class="d-flex small message-time">
-                                                {{ message.timestamp | date: 'shortTime' }}
-                                                <mat-icon *ngIf="message.status === 'sent'" class="ms-1">done</mat-icon>
-                                                <mat-icon *ngIf="message.status === 'delivered'"
-                                                    class="ms-1">done_all</mat-icon>
-                                                <mat-icon *ngIf="message.status === 'read'"
-                                                    class="ms-1 text-primary">done_all</mat-icon>
-                                            </div>
-                                        </mat-card-content>
-                                    </mat-card>
-                                </div> -->
-                                <div *ngFor="let group of groupedMessages">
-                                    <!-- Date Divider -->
-                                    <div class="date-divider text-center my-2">
-                                      <span class="date-label">{{ formatDateLabel(group.date) }}</span>
-                                    </div>
-                                  
-                                    <!-- Message Loop -->
-                                    <div *ngFor="let message of group.messages" class="d-flex mb-2"
-                                         [ngClass]="{ 'justify-content-end': message.sender === 'me' }">
-                                  
-                                      <mat-card class="message-content"
-                                                [ngClass]="{
-                                                  'sent-message': message.sender === 'me',
-                                                  'received-message': message.sender !== 'me'
-                                                }">
-                                  
-                                        <mat-card-content>
-                                          <p class="mb-1 message-text">{{ message.text }}</p>
-                                          <div class="d-flex small message-time">
-                                            {{ message.timestamp | date: 'shortTime' }}
-                                            <mat-icon *ngIf="message.status === 'sent'" class="ms-1">done</mat-icon>
-                                            <mat-icon *ngIf="message.status === 'delivered'" class="ms-1">done_all</mat-icon>
-                                            <mat-icon *ngIf="message.status === 'read'" class="ms-1 text-primary">done_all</mat-icon>
-                                          </div>
-                                        </mat-card-content>
-                                  
-                                      </mat-card>
-                                    </div>
-                                  </div>
-                                  
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="row">
-                        <div class="col-12 mb-1">
-                            <div class="chat-input-box d-flex align-items-center justify-content-center">
-                                <input type="text" [(ngModel)]="newMessage" (keyup.enter)="sendMessage()"
-                                    class="form-control chat-input-field" placeholder="Type a message..." />
-                                <button class="btn send-btn" (click)="sendMessage()">
-                                    <mat-icon>send</mat-icon>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </ng-container>
-                <ng-template #welcomeBlock>
-                    <div class="row h-100 justify-content-center align-items-center text-center">
-                        <div class="col-12">
-                            <div class="welcome">Welcome</div>
-                            <div class="message">Select a chat to start messaging. <br> You can send and receive
-                                messages here</div>
-                        </div>
-                    </div>
-                </ng-template>
+    <mat-card (click)="goTo('/u/ble')" class="clickable-card">
+      <mat-card-content>
+        <div class="row align-items-center">
+          <div class="col-4">
+            <div class="title-icon">
+              <mat-icon>bluetooth</mat-icon>
             </div>
-
+          </div>
+          <div class="col-8">
+            <div class="title">Mobile Oriented</div>
+          </div>
+          <div class="col-12 description">
+            Select a nearby device to send a message.
+          </div>
         </div>
-    </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card (click)="goTo('/u/mt')" class="clickable-card">
+      <mat-card-content>
+        <div class="row align-items-center">
+          <div class="col-4">
+            <div class="title-icon">
+              <mat-icon>mobile_friendly</mat-icon>
+            </div>
+          </div>
+          <div class="col-8">
+            <div class="title">Mobile Terminated</div>
+          </div>
+          <div class="col-12 description">
+            Select to send a message to the selected contact.
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
 </div>

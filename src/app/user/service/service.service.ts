@@ -19,4 +19,12 @@ export class ServiceService {
     const body = { start_utc: startUtc, end_utc: endUtc };
     return this.http.post(this.API_URL + '/msg/chat', body);
   }
+
+  sendMTMessage(destinationId: string, message: string): Observable<any> {
+    const body = {
+      DestinationID: destinationId,
+      message: message
+    };
+    return this.http.post(this.API_URL + '/msg/send-mt', body);
+  }  
 }

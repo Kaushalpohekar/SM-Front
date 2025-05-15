@@ -8,6 +8,8 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { UserRoutingModule } from './user-routing.module';
 import { MaterialModule } from '../material/material.module';
 import { FormsModule } from '@angular/forms';
+import { BleComponent } from './pages/ble/ble.component';
+import { MtComponent } from './pages/mt/mt.component';
 
 
 
@@ -17,7 +19,9 @@ import { FormsModule } from '@angular/forms';
     BodyComponent,
     HeaderComponent,
     SidebarComponent,
-    DashboardComponent
+    DashboardComponent,
+    BleComponent,
+    MtComponent
   ],
   imports: [
     CommonModule,

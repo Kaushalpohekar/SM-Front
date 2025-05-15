@@ -1,0 +1,19 @@
+<div class="container-fluid dash">
+  <div class="card-container">
+    <!-- Scan Button -->
+    <button class="btn btn-success w-100 mb-3" (click)="scanDevices()" [disabled]="isScanning">
+      {{ isScanning ? 'Scanning...' : '🔍 Scan BLE Devices' }}
+    </button>
+
+    <!-- Device List -->
+    <mat-card *ngFor="let dev of devices" class="chat-list chat-item mb-2" (click)="selectDevice(dev)">
+      <mat-card-content class="d-flex justify-content-between align-items-center">
+        <div>
+          <h6>{{ dev.name || 'Unnamed Device' }}</h6>
+          <small>{{ dev.id }}</small>
+        </div>
+        <mat-icon color="primary">bluetooth_connected</mat-icon>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
